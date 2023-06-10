@@ -1,0 +1,32 @@
+{
+	"adjacency": {
+		"DynamoDB": ["2"],
+		"EC2": ["3"],
+		"ALB": ["7"]
+	},
+	"nodes": {
+		"DynamoDB#23": {
+			"region": "ap-south-1"
+		},
+		"EC2#34": {
+			"region": "us-east-1"
+		},
+		"DynamoDB#45": {
+			"region": "us-west-1"
+		}
+	},
+	"edges": {
+		"1": {
+			"from": "*",
+			"to": "DynamoDB#45"
+		},
+		"2": {
+			"from": "DynamoDB#45",
+			"to": "EC2#34"
+		},
+		"3": {
+			"from": "EC2#34",
+			"to": "DynamoDB#23"
+		}
+	}
+}

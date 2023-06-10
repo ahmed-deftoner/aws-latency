@@ -1,0 +1,40 @@
+project_name: awsping
+builds:
+- env:
+  - CGO_ENABLED=0
+  main: ./cmd/awsping
+  goos:
+    - linux
+    - windows
+    - darwin
+  goarch:
+    - amd64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+    - '^Makefile:'
+    - '^README:'
+    - '^gitignore:'
+    - '^goreleaser:'
+dockers:
+  - image_templates:
+    - "docker.io/evkalinin/{{.ProjectName}}:{{ .Tag }}"
+    - "docker.io/evkalinin/{{.ProjectName}}:latest"
+    - "ghcr.io/ekalinin/{{.ProjectName}}:{{ .Tag }}"
+    - "ghcr.io/ekalinin/{{.ProjectName}}:latest"
+    dockerfile: Dockerfile.goreleaser
+    build_flag_templates:
+    - "--pull"
+    - "--label=org.opencontainers.image.created={{.Date}}"
+    - "--label=org.opencontainers.image.name={{.ProjectName}}"
+    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    - "--label=org.opencontainers.image.version={{.Version}}"
+    - "--label=org.opencontainers.image.source={{.GitURL}}"
+    - "--platform=linux/amd64"
